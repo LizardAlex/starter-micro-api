@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('example.db');
+const db = new sqlite3.Database('db.sqlite3');
 
 db.serialize(() => {
     db.run("CREATE TABLE IF NOT EXISTS lorem (info TEXT, amount INTEGER)");
