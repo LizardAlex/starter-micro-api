@@ -8,6 +8,11 @@
   <title>Tracking</title>
 </head>
 <body>
+   <style>
+      body {
+         background-color: #313131;
+      }
+   </style>
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
 
@@ -17,9 +22,6 @@
 	  xhr.onreadystatechange = () => {
 	    if (xhr.readyState === 4) {
 	      var response = JSON.parse(xhr.response);
-	      console.log(response);
-
-
 
 
 		var dataPoints = [];
@@ -31,14 +33,13 @@
 		 dataPoints.sort((a,b) => b.y - a.y);
 		var chart = new CanvasJS.Chart("chartContainer", {
 			
-			theme: "light1", // "light2", "dark1", "dark2"
+			theme: "dark1",
 			animationEnabled: false, // change to true		
 			title:{
 				text: response.key,
 			},
 			data: [
 			{
-				// Change type to "bar", "area", "spline", "pie",etc.
 				type: "column",
 				dataPoints
 			}
