@@ -4,8 +4,8 @@ const path = require('path');
 
 var statsObject = {};
 
-if (fs.existsSync('./stat.txt')) {
-	fs.readFile('./stat.txt', 'utf8', (error, data) => {
+if (fs.existsSync('./stat.json')) {
+	fs.readFile('./stat.json', 'utf8', (error, data) => {
         statsObject = JSON.parse(data);
 	});
 }
@@ -22,7 +22,7 @@ const server = http.createServer((req, res) => {
 			if (!statsObject[split1[1]]) statsObject[split1[1]] = {};
 			if (!statsObject[split1[1]][split2[1]]) statsObject[split1[1]][split2[1]] = 0;
 			statsObject[split1[1]][split2[1]] += 1;
-			fs.writeFile('./stat.txt', JSON.stringify(statsObject), (error) => {
+			fs.writeFile('./stat.json', JSON.stringify(statsObject), (error) => {
 				error ? console.log(error) : null;
 			});
 		}
