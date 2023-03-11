@@ -66,6 +66,7 @@ const server = http.createServer((req, res) => {
 	}
 
     if (req.url === '/') {
+      res.setHeader('Content-Type', 'text/html');
 	  fs.readFile('./index.html', (err, data) => {
 	    if (err) {
 	      console.log(err);
