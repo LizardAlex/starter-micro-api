@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cyclic.sh/dynamodb": "0.0.33",
     "sqlite3": "^5.1.4"
   }
 }

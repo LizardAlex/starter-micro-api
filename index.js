@@ -1,41 +1,55 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const CyclicDb = require("@cyclic.sh/dynamodb")
+const db = CyclicDb("ruby-elated-pigeonCyclicDB")
 
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('db.sqlite3');
-
-db.serialize(() => {
-    db.run("CREATE TABLE IF NOT EXISTS lorem (info TEXT, amount INTEGER)");
-
-
-    db.run("INSERT INTO lorem (info, amount) VALUES ('Zalue2p', 150)");
+const run = async function(game, event, res){
+    let animals = db.collection('playables')
 
 
-    db.each("SELECT rowid AS id, info, amount FROM lorem", (err, row) => {
-        console.log(row.id + ": " + row.info + " " + row.amount);
-    });
-});
+    let item = await animals.get(game)
+    // create an item in collection with key "leo"
+    if (!item || !item.props[event]) {
+	    const obj = {};
+	    obj[event] = 1;
+	    let leo = await animals.set(game, obj);
+    } else {
+	    const obj = {};
+	    obj[event] = item.props[event] + 1;
+	    let leo = await animals.set(game, obj);
+    }
 
-//db.close();
+
+    res.write(JSON.stringify(item));
+	res.end();
+}
+
+const run2 = async function(res){
+	let animals = db.collection('playables')
+	let all = await animals.list();
+	for (let i = 0; i < all.results.length; i += 1) {
+		let leo = await animals.get(all.results[i].key);
+		res.write(JSON.stringify(leo));
+	}
+
+    
+	res.end();
+}
 
 
+//run();
 
 
 
 var statsObject = {};
 
-if (fs.existsSync('./stat.json')) {
-	fs.readFile('./stat.json', 'utf8', (error, data) => {
-        statsObject = JSON.parse(data);
-	});
-}
 
-const PORT = 3000;
-const server = http.createServer((req, res) => {
-	console.log('server request');
-	console.log(req.url, req.method);
-/*    const split = req.url.split("?");
+	const PORT = 3000;
+	const server = http.createServer((req, res) => {
+
+    const split = req.url.split("?");
+
 	if (split[1]) {
 		const split1 = split[0].split("=");
 		const split2 = split[1].split("=");
@@ -43,28 +57,13 @@ const server = http.createServer((req, res) => {
 			if (!statsObject[split1[1]]) statsObject[split1[1]] = {};
 			if (!statsObject[split1[1]][split2[1]]) statsObject[split1[1]][split2[1]] = 0;
 			statsObject[split1[1]][split2[1]] += 1;
-			fs.writeFile('./stat.json', JSON.stringify(statsObject), (error) => {
-				error ? console.log(error) : null;
-			});
+			item = run(split1[1], split2[1], res);
 		}
-	}*/
-	db.run(`INSERT INTO lorem (info, amount) VALUES ('Zalue2p', ${Math.floor(Math.random() * 150)})`);
+	}
 
-
-	res.setHeader('Content-type', 'application/json');
-	let str = '';
-//	db.serialize(() => {
-    db.each("SELECT rowid AS id, info, amount FROM lorem", (err, row) => {
-        str += row.id + ": " + row.info + " " + row.amount;
-    }, () => {
-	    res.write(str);
-	    res.end();
-    });
-
-	//});
-	//db.close();
-    
-
+    if (req.url === '/') {
+    	run2(res);
+    }
 
 	
 	//res.write(JSON.stringify(statsObject));
@@ -72,5 +71,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, 'localhost', (error) => {
-	error ? console.log(error) : console.log('listening 300');
+	error ? console.log(error) : console.log('listening 3000');
 });
