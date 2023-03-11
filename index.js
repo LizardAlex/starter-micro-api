@@ -81,6 +81,7 @@ const server = http.createServer((req, res) => {
     	//run2(res);
     }
     if (req.url === '/stat') {
+    	console.log('stat look');
     	run2(res);
     }
 
