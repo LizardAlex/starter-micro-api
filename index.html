@@ -12,14 +12,17 @@
 	<script> 
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `https://ruby-elated-pigeon.cyclic.app/stat`);
-    xhr.send();
 	  xhr.onreadystatechange = () => {
 	  	console.log(xhr)
 	    if (xhr.readyState === 4) {
 	      console.log(xhr.response);
 	    }
 	  }
+
+    
+    xhr.open("POST", `https://ruby-elated-pigeon.cyclic.app/stat`);
+    xhr.send();
+
 	</script>
 
 </body>

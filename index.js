@@ -31,11 +31,12 @@ const run = async function(game, event, res){
 const run2 = async function(res){
 	let animals = db.collection('playables')
 	let all = await animals.list();
+	res.setHeader('Content-Type', 'application/json');
 	for (let i = 0; i < all.results.length; i += 1) {
 		let leo = await animals.get(all.results[i].key);
 		res.write(JSON.stringify(leo));
 	}
-    res.setHeader('Content-Type', 'application/json');
+    
     //res.statusCode = 400;
 	res.end();
 }
