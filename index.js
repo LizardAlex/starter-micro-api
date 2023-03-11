@@ -22,6 +22,7 @@ const run = async function(game, event, res){
 
 
     res.write(JSON.stringify(item));
+    res.statusCode = 400;
 	res.end();
 }
 
@@ -33,7 +34,7 @@ const run2 = async function(res){
 		res.write(JSON.stringify(leo));
 	}
 
-    
+    res.statusCode = 400;
 	res.end();
 }
 
