@@ -24,7 +24,7 @@ const run = async function(game, event, res){
 
 
     res.write(JSON.stringify(item));
-    res.statusCode = 400;
+    //res.statusCode = 400;
 	res.end();
 }
 
@@ -35,8 +35,8 @@ const run2 = async function(res){
 		let leo = await animals.get(all.results[i].key);
 		res.write(JSON.stringify(leo));
 	}
-
-    res.statusCode = 400;
+    res.setHeader('Content-Type', 'application/json');
+    //res.statusCode = 400;
 	res.end();
 }
 
