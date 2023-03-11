@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="">
+  <title>Tracking</title>
+</head>
+<body>
+
+	<script> 
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `https://ruby-elated-pigeon.cyclic.app/stat`);
+    xhr.send();
+	  xhr.onreadystatechange = () => {
+	    if (xhr.readyState === 4) {
+	      console.log(xhr.response);
+	    }
+	  }
+	</script>
+
+</body>
+</html>

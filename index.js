@@ -4,6 +4,8 @@ const path = require('path');
 const CyclicDb = require("@cyclic.sh/dynamodb")
 const db = CyclicDb("ruby-elated-pigeonCyclicDB")
 
+
+
 const run = async function(game, event, res){
     let animals = db.collection('playables')
 
@@ -43,11 +45,11 @@ const run2 = async function(res){
 
 
 
-var statsObject = {};
-
-
+	var statsObject = {};
 	const PORT = 3000;
-	const server = http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
+
+
 
     const split = req.url.split("?");
 
@@ -63,8 +65,24 @@ var statsObject = {};
 	}
 
     if (req.url === '/') {
+	  fs.readFile('./index.html', (err, data) => {
+	    if (err) {
+	      console.log(err);
+	      res.statusCode = 500;
+	      res.end();
+	    } else {
+	      res.write(data);
+	      res.end();
+	    }
+	  });
+
+    	//run2(res);
+    }
+    if (req.url === '/stat') {
     	run2(res);
     }
+
+
 
 	
 	//res.write(JSON.stringify(statsObject));
