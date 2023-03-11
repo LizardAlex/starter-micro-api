@@ -17,7 +17,6 @@ const run = async function(game, event, res){
     } else {
 	    const obj = {};
 	    obj[event] = item.props[event] + 1;
-	    obj[event] = 0;
 	    let leo = await animals.set(game, obj);
     }
 
